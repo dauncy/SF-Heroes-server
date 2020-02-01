@@ -18,6 +18,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'rest-client'
 
+gem 'fast_jsonapi'
+
 gem 'pry'
 
 gem 'json'

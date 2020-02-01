@@ -27,5 +27,6 @@ Rails.application.routes.draw do
 
   # routes for authorization & authentication
   post '/login', to: 'auth#create'
-  get '/profile', to: 'users#profile'
+  get '/profile', to: 'user#profile'
+  
 end

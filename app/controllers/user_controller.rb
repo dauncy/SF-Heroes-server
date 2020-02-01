@@ -1,8 +1,11 @@
 class UserController < ApplicationController
-    skip_before_action :authorized, only: [:create]
+    # skip_before_action :authorized, only: [:create]
 
     def profile
-       render json: { user: current_user }, status: :accepted
+        
+       
+        render json: { user: UserSerializer.new(current_user) }, status: :accepted
+       
     end
 
 
@@ -18,10 +21,10 @@ class UserController < ApplicationController
 
     def create 
         user = User.create(user_params)
-
+       byebug
         if user.valid?
             @token = encode_token(user_id: user.id)
-            render json: { user: user, jwt: @token }, status: :created
+            render json: { user: UserSerializer.new(user), jwt: @token }, status: :created
         else 
             render json: { error: 'failed to create user' }, status: :not_acceptable
         end
@@ -32,11 +35,15 @@ class UserController < ApplicationController
     def update
         user = User.find(params[:id])
         user.update(user_params)
-        render json: user
+        if user.valid?
+            render json: {user: UserSerializer.new(user)}
+        else 
+            render json: {error: 'this username has already been taken'}, status: :not_acceptable
+        end 
     end 
 
     def destroy
-        user = user.find(params[:id])
+        user = User.find(params[:id])
         user.destroy
         
     end 
