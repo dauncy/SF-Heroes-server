@@ -1,11 +1,36 @@
 class CommunityEventController < ApplicationController
 
     def index
-        
+
+           community_events = [ ]
+           if params[:title] && params[:district] && params[:status]
+                community_events.push(CommunityEvent.where(title: params[:title], district: params[:district], status: params[:status]))
           
-            community_events = CommunityEvent.where(query_params)
+           
+                elsif params[:district] && params[:title]
+                    community_events.push(CommunityEvent.where(district: params[:district], title: params[:title]))
+              
+
+                elsif params[:status] && params[:district]
+                        community_events.push(CommunityEvent.where(status: params[:status], district: params[:district]))
             
-            render json: community_events
+                elsif params[:title] && params[:status]
+                    community_events.push(CommunityEvent.where(status: params[:status], title: params[:title]))
+
+                elsif params[:district]
+                    community_events.push(CommunityEvent.where(district: params[:district])) 
+           
+                elsif params[:title]
+                    community_events.push(CommunityEvent.where(title: params[:title]))
+
+                elsif params[:status]
+                    community_events.push(CommunityEvent.where(status: params[:status]))
+                else 
+                    community_events.push(CommunityEvent.all)
+                end 
+                    render json: community_events
+         
+          
     end 
 
     def show
@@ -41,7 +66,7 @@ class CommunityEventController < ApplicationController
     end 
 
     def query_params
-        params.permit(:title, :status, :service_subtype)
+        params.permit(:title, :status, :district)
     end 
 
     

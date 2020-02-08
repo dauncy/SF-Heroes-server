@@ -25,6 +25,7 @@ new_cases.each do |object|
     if object["media_url"] != nil
     CommunityEvent.create(
         sf_data_reference: object["service_request_id"],
+        district: object["neighborhoods_sffind_boundaries"],
         title: object["service_name"],
         status: object["status_description"],
         service_subtype: object["service_subtype"],
@@ -38,12 +39,13 @@ new_cases.each do |object|
         CommunityEvent.create(
             sf_data_reference: object["service_request_id"],
             title: object["service_name"],
+            district: object["neighborhoods_sffind_boundaries"],
             status: object["status_description"],
             service_subtype: object["service_subtype"],
             service_details: object["service_details"],
             address: object["address"],
             latitude: object["lat"],
             longitude: object["long"],
-            media_url: "./public/communism.png")
+            media_url: "http://localhost:3000/public/communism.png")
     end 
 end 

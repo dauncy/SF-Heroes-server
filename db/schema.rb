@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 4) do
 
   create_table "community_events", force: :cascade do |t|
     t.integer "sf_data_reference"
+    t.string "district"
     t.string "title"
     t.string "status"
     t.string "service_subtype"
