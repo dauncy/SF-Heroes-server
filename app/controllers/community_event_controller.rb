@@ -35,7 +35,11 @@ class CommunityEventController < ApplicationController
 
     def show
         community_event = CommunityEvent.find(params[:id])
-        render json: community_event
+        comments = community_event.comments
+        
+
+        
+        render json: community_event, :include => [:comments  => {:include => :user }]
     end 
 
     def create
@@ -62,7 +66,8 @@ class CommunityEventController < ApplicationController
                 :address, 
                 :latitude, 
                 :longitude,
-                :media_url)
+                :media_url,
+                :sf_data_reference)
     end 
 
     def query_params
