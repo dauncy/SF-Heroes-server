@@ -39,7 +39,7 @@ class CommunityEventController < ApplicationController
         
 
         
-        render json: community_event, :include => [:comments  => {:include => :user }]
+        render json: community_event, :include => [:users, :comments  => {:include => :user }]
     end 
 
     def create
@@ -48,9 +48,9 @@ class CommunityEventController < ApplicationController
     end 
 
     def update
-        community_event = Community_event.find(params[:id])
+        community_event = CommunityEvent.find(params[:id])
         community_event.update(community_event_params)
-        render json: community_event 
+        render json: community_event, :include => [:users => {:include => :community_events}]
     end 
 
 
@@ -67,7 +67,8 @@ class CommunityEventController < ApplicationController
                 :latitude, 
                 :longitude,
                 :media_url,
-                :sf_data_reference)
+                :sf_data_reference,
+                :updated_at)
     end 
 
     def query_params

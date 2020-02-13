@@ -46,6 +46,6 @@ new_cases.each do |object|
             address: object["address"],
             latitude: object["lat"],
             longitude: object["long"],
-            media_url: "http://localhost:3000/public/communism.png")
+            media_url: "http://localhost:3000/assets/communism.png")
     end 
 end 

@@ -15,11 +15,13 @@ class UserEventController < ApplicationController
         user_event = UserEvent.create(user_event_params)
         community_event = user_event.community_event
         community_event.update(status: "Accepted")
-        options = {}
+        user = user_event.user
+        community_events = user.community_events
+        
 
         if user_event.valid?
-
-            render json: user_event, :include => [:user => {:include => :community_events }]
+             
+            render json: user_event, :include => [:user => {:include => :community_events}]
         else
             render json: { error: 'failed to add event' }, status: :not_acceptable
         end

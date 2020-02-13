@@ -5,9 +5,8 @@ class AuthController < ApplicationController
       @user = User.find_by(username: user_login_params[:username])
         if @user && @user.authenticate(user_login_params[:password])
             token = encode_token({ user_id: @user.id })
-            options ={}
-            options[:include] = [:community_events]
-            render json: { user: UserSerializer.new(@user, options), jwt: token }, status: :accepted
+            
+            render json: { user: UserSerializer.new(@user, :include => [:community_events]), jwt: token }, status: :accepted
         else
             render json: { error: 'Invalid username or password' }, status: :unauthorized
         end

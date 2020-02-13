@@ -3,9 +3,8 @@ class UserController < ApplicationController
 
     def profile
     
-        options ={}
-        options[:include] = [:community_events]
-        render json: { user: UserSerializer.new(current_user, options) }, status: :accepted
+       
+        render json: { user: UserSerializer.new(current_user, :include => [:community_events]) }, status: :accepted
       
        
     end
@@ -25,9 +24,7 @@ class UserController < ApplicationController
       
         if user.valid?
             @token = encode_token(user_id: user.id)
-            options ={}
-             options[:include] = [:community_events]
-            render json: { user: UserSerializer.new(user, options), jwt: @token }, status: :created
+            render json: { user: UserSerializer.new(user, :include => [:community_events]), jwt: @token }, status: :created
         else 
             render json: { error: 'failed to create user' }, status: :not_acceptable
         end
