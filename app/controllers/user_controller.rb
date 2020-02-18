@@ -44,7 +44,17 @@ class UserController < ApplicationController
 
     def destroy
         user = User.find(params[:id])
+       
+        community_events = user.community_events.where(status: "Accepted")
+        community_events.each do |event|
+             if event.users.length == 1 
+            community_events.update(status: "Open")
+            end 
+           
+        end 
+  
         user.destroy
+
         
     end 
 
